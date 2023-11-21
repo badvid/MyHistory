@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/cvEtapas"
+    tools:ignore="InvalidId">
+
+    <FrameLayout
+        android:id="@+id/lyEtapas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/f_etapa"
+        >
+
+        <LinearLayout
+            android:id="@+id/imgEtapa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_alpha"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingTop="50dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/etEtapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vivencias"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/etCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4 Registradas"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

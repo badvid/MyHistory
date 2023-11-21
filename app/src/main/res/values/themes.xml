@@ -1,0 +1,60 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MiFamilia" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/app_primary</item>
+        <item name="colorPrimaryVariant">@color/app_primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/app_secondary</item>
+        <item name="colorSecondaryVariant">@color/app_secondary_variant</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color.
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:actionBarStyle">@style/AppTheme</item>
+        <!--<item name="android:toolbarStyle">@style/AppTheme</item>
+        <item name="android:navigationBarColor">?attr/colorSecondary</item>
+         <item name="android:windowFullscreen">true</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="fontFamily">@font/roboto</item>-->
+    </style>
+
+    <style name="btnPrimary" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/app_primary</item>
+        <item name="background">@drawable/btn_primary</item>
+        <item name="android:textColorHighlight">@color/gray_300</item>
+        <item name="android:colorButtonNormal">@color/pink</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornersSize" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="AppTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/MyTheme.ActionBar.Subtitle</item>
+        <item name="android:background">#8B0000</item>
+    </style>
+
+    <style name="Theme.MiFamilia.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/MyTheme.ActionBar.Subtitle</item>
+        <item name="android:background">#8B0000</item>
+    </style>
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="MyTheme.ActionBar.Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+
+
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.bad.mifamilia.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.bad.mifamilia.ui.history.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_navigation_history_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_family"
+        android:name="com.bad.mifamilia.ui.family.FamilyFragment"
+        android:label="@string/title_myFamily"
+        tools:layout="@layout/fragment_family" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.bad.mifamilia.ui.settings.SettingsFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.bad.mifamilia.ui.history.GalleryFragment"
+        android:label="Mis Galerias"
+        tools:layout="@layout/fragment_gallery" >
+
+        <action
+            android:id="@+id/action_galleryFragment_to_navigation_history"
+            app:destination="@id/navigation_history" />
+        <action
+            android:id="@+id/action_galleryFragment_to_multimediaFragment"
+            app:destination="@id/multimediaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/multimediaFragment"
+        android:name="com.bad.mifamilia.ui.history.MultimediaFragment"
+        android:label="Galeria"
+        tools:layout="@layout/fragment_multimedia" >
+        <action
+            android:id="@+id/action_multimediaFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+        <action
+            android:id="@+id/action_multimediaFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.bad.mifamilia.ui.history.ItemFragment"
+        android:label="Multimedia"
+        tools:layout="@layout/fragment_item" >
+        <action
+            android:id="@+id/action_itemFragment_to_multimediaFragment"
+            app:destination="@id/multimediaFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mnu_add_stages"
+        android:title="Nueva Etapa"
+        android:icon="@drawable/ic_add_circle_outline"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/mnu_add_galery"
+        android:title="Nueva Galey"
+        android:icon="@drawable/ic_add_circle_outline"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/mnu_add_photo"
+        android:title="Nueva Foto"
+        android:icon="@drawable/ic_photo_camera"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/mnu_add_family"
+        android:title="Nueva Familia"
+        android:icon="@drawable/ic_add_circle_outline"
+        app:showAsAction="always"
+        />
+    <!--
+    <item
+        android:id="@+id/mnu_new_stages"
+        android:title="Nueva Etapa"
+        android:icon="@drawable/ic_add_stages"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/mnu_new_galery"
+        android:title="Nueva Galeria"
+        android:icon="@drawable/ic_add_galery"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/mnu_new_photo"
+        android:title="Nueva Foto"
+        android:icon="@drawable/ic_add_galery"
+        app:showAsAction="never"
+        />
+    <item
+        android:title="...">
+        <menu>
+            <item
+                android:id="@+id/mnu_new_photo1"
+                android:title="Nueva Foto"
+                android:icon="@drawable/ic_add_galery"
+                app:showAsAction="never"
+                />
+        </menu>
+    </item>-->
+</menu>

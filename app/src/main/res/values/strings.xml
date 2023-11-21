@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">My Leyends</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_history">Mi Historia</string>
+    <string name="title_oculto"></string>
+    <string name="title_myFamily">Mi Familia</string>
+    <string name="title_setting">Ajustes</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hint_apellido">Apellido</string>
+    <string name="hint_nombres">Nombres</string>
+    <string name="hint_correo">Correo</string>
+    <string name="hint_documento">Documento</string>
+    <string name="hint_clave">Clave</string>
+    <string name="hint_reclave">Reescriba la clave</string>
+    <string name="subtitle_historia">TE VOY A CONTAR QUIEN FUI YO</string>
+    <string name="subtitle_familia">ASÍ SE COMPONE MI FAMILIA</string>
+    <string name="mensaje_g_primera_vez">Como no tiene ni <b>Etapas</b>,ni <b>Galerías</b>, las mismas se crearán automaticamente, por favor ingrese un nombre para cada sección</string>
+    <string name="mensaje_g_primera">Por favor eleccione la Etapa y Galeria para asociar la foto correctaente.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
