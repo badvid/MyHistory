@@ -3,6 +3,7 @@ package com.bad.mifamilia.data.services
 import com.bad.mifamilia.data.services.models.*
 import com.bad.mifamilia.models.Parent
 import com.bad.mifamilia.data.services.models.*
+import com.bad.mifamilia.models.HomeFull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -52,6 +53,11 @@ interface APIService {
     suspend fun getFamily(@Query("id") id: Int =0,@Query("id_user") id_user : Int = 0,@Query("page") page: Int=0,@Query("perPage") perPage : Int=10 ) : Response<FamilyGetResponse>
     @POST("Family")
     fun saveFamily(@Body body: FamilyPost) : Call<FamilyPostResponse>
+
+    //Home
+    @POST("Home")
+    fun saveHomeFull(@Body body: HomeFull) : Call<HomePostResponse>
+
     //Files
     @Multipart
     @POST("api/Files")
@@ -59,6 +65,15 @@ interface APIService {
         @Part image : MultipartBody.Part,
         @Query("userId") UserId : Int,
         @Query("sectorId") SectorId : Int
+    ): Call<FilePostResponse>
+    @Multipart
+    @POST("api/FilesAll")
+    fun uploadImageAll (
+        @Part image : MultipartBody.Part,
+        @Query("userId") UserId : Int,
+        @Query("sectorId") SectorId : Int,
+        @Query("stageId") StageId : Int,
+        @Query("galeryId") GaleryId : Int
     ): Call<FilePostResponse>
     /*@Multipart
     @POST("Files")

@@ -47,6 +47,7 @@ class ItemFragment : Fragment() {
         Glide.with(activity!!)
             .load(g.oMultimedia!!.link)
             .centerInside()
+            .skipMemoryCache(true)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(binding.imgFoto)

@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable
 import android.media.ExifInterface
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -29,6 +30,8 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -42,10 +45,7 @@ import com.bad.mifamilia.databinding.ActivityMainBinding
 import com.bad.mifamilia.helpers.GlobalClass
 import com.bad.mifamilia.helpers.LoadingDialog
 import com.bad.mifamilia.helpers.RetrofitHelper
-import com.bad.mifamilia.models.Archivo
-import com.bad.mifamilia.models.Etapa
-import com.bad.mifamilia.models.Galeria
-import com.bad.mifamilia.models.Parent
+import com.bad.mifamilia.models.*
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputLayout
@@ -57,6 +57,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
+
 
 class MainActivity : AppCompatActivity()  {
     private lateinit var binding: ActivityMainBinding
@@ -71,14 +72,19 @@ class MainActivity : AppCompatActivity()  {
     private var values: ContentValues? = null
     private var imageUri: Uri? = null
     private lateinit var file : File
+    private var _fileName : String=""
     private lateinit var _file64string : String
+    private lateinit var viewModel: MainViewModel
+
+    private var oEtapa : Etapa? = null
+    private var oGaleria : Galeria? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         //supportActionBar!!.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         badge = BadgeDrawable.create(this)
         try {
             loadingDialog = LoadingDialog(this@MainActivity)
@@ -126,12 +132,14 @@ class MainActivity : AppCompatActivity()  {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //binding.btnAdd.visibility =View.GONE
         binding.btnAdd.setOnClickListener {
             //takePhoto()
             //getAction.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
                 it.resolveActivity(packageManager).also{ component ->
-                    val photoFile = createPhotoFile()
+                    file = createPhotoFile()
+                    val photoFile = file
                     val photoUri : Uri =
                         FileProvider.getUriForFile(
                             this,
@@ -179,6 +187,15 @@ class MainActivity : AppCompatActivity()  {
 
         }
         */
+        popup = Dialog(this)
+        viewModel.setearPopUp(popup)
+        viewModel.popup.observe(this, Observer {
+            popup = it
+        })
+        viewModel.file.observe(this, Observer {
+            file = it
+        })
+
         lifecycleScope.launch {
 
             val resp : Response<ParentGetResponse> = retrofit.getParents()
@@ -285,6 +302,7 @@ class MainActivity : AppCompatActivity()  {
                             )
 
                         it.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+
                         // Toast.makeText(this, "resolveActivity ", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -468,6 +486,8 @@ class MainActivity : AppCompatActivity()  {
     private fun createPhotoFile(): File{
         var dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         file = File.createTempFile("IMG_${System.currentTimeMillis()}_",".jpg",dir)
+        _fileName = file.absolutePath
+        viewModel.setearFile(file)
         return file
     }
     private fun getBitmap(): Bitmap{
@@ -1009,9 +1029,13 @@ class MainActivity : AppCompatActivity()  {
                     true
                 )
 
+                //popup.findViewById<ImageView>(R.id.img_foto).setImageBitmap(imageBitmapNew)
                // val imageBitmap = BitmapFactory.decodeFile(file.toString())
-                val _img:Drawable = BitmapDrawable(imageBitmapNew)
+                //val background: BitmapDrawable
+                //background = BitmapDrawable(BitmapFactory.decodeResource(resources, R.drawable.back))
+                val _img:Drawable = BitmapDrawable(imageBitmap)
                 popup.findViewById<ConstraintLayout>(R.id.img_foto_bg).background = _img
+
                 //Toast.makeText(this, "imagen seteada", Toast.LENGTH_SHORT).show()
 
 
@@ -1082,7 +1106,7 @@ class MainActivity : AppCompatActivity()  {
 
     }
     private fun showResultPopUp(bm : Bitmap){
-        popup = Dialog(this)
+
         popup.setContentView(R.layout.popup_add_photo)
         val btnCerrar = popup.findViewById<ImageView>(R.id.img_close)
         val btnPhoto = popup.findViewById<ConstraintLayout>(R.id.img_foto_bg)
@@ -1130,7 +1154,8 @@ class MainActivity : AppCompatActivity()  {
             popup.findViewById<TextInputLayout>(R.id.ly_g_galeria_cbo).visibility = View.VISIBLE
             popup.findViewById<TextInputLayout>(R.id.ly_g_etapa).visibility = View.GONE
             try {
-                val oEtapa : Etapa? = g.iStages.find { et: Etapa -> et.etapa.toUpperCase() == item }
+                //val oEtapa : Etapa? = g.iStages.find { et: Etapa -> et.etapa.toUpperCase() == item }
+                oEtapa = g.iStages.find { et: Etapa -> et.etapa.toUpperCase() == item }
                 var galerias : List<String>? = null
                 if (oEtapa != null) galerias = oEtapa!!.iGallery!!.map { gly: Galeria -> gly.name.toString().toUpperCase() }
 
@@ -1145,9 +1170,18 @@ class MainActivity : AppCompatActivity()  {
             }
 
         }
+        cboGaleria.setOnItemClickListener { adapterView, view, i, l ->
+            val item : String = adapterView.getItemAtPosition(i).toString()
+            oGaleria = oEtapa!!.iGallery!!.find { gly: Galeria -> gly.name.toString().toUpperCase() == item }
 
-        popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popup.show()
+        }
+
+        if(!isFinishing()){
+            popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            popup.show()
+        }
+
+
 
         btnPhoto.setOnClickListener {
             /* val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
@@ -1168,39 +1202,139 @@ class MainActivity : AppCompatActivity()  {
 
         }
         btnAceptar.setOnClickListener {
+            var idstage: Int = if(oEtapa != null) oEtapa!!.id_etapa else 0
+            var idgalery: Int = if(oGaleria != null) oGaleria!!.id else 0
+            var obj : HomeFull = HomeFull(0,g.oUsu!!.id,idstage,idgalery,txtEtapa.text.toString(),txtGaleria.text.toString(),"","","")
+            guardarTodo(obj)
             popup.dismiss()
         }
         btnCerrar.setOnClickListener {
             popup.dismiss()
         }
     }
+    private fun guardarTodo(obj : HomeFull){
+        loadingDialog!!.startLoadingDialog()
+        try {
+            lifecycleScope.launch {
+
+                var _filename:String=""
+                var _link:String=""
+                val fileBody = RequestBody.create(MediaType.parse("image/*"), file)
+                var image = MultipartBody.Part.createFormData("files",file.name,fileBody)
+
+
+                var callFile: Call<FilePostResponse> = retrofit.uploadImageAll(image,g.oUsu!!.id ,10,0,0)
+                callFile.enqueue(object : Callback<FilePostResponse> {
+                    override fun onResponse(
+                        call: Call<FilePostResponse>,
+                        response: Response<FilePostResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            val post = response.body()
+                            var _archivos : List<Archivo> = post!!.data
+                            _filename = _archivos.first().nombre
+                            _link = _archivos.first().ubicacion
+
+                            obj.link = _link
+                            val call: Call<HomePostResponse> = retrofit.saveHomeFull(obj)
+                            call.enqueue(object : Callback<HomePostResponse> {
+                                override fun onResponse(call: Call<HomePostResponse>, response: Response<HomePostResponse>) {
+                                    // copyToClip(response.toString())
+                                    if (response.isSuccessful) {
+                                        val post = response.body()
+                                        // Handle the retrieved post data
+                                        //goHome()
+
+                                        loadingDialog!!.dismissDialog()
+                                        if(post!!.success)
+                                        {
+                                            //g.iFamily =  g.iFamily.plus(post!!.data)
+                                            //g.familyAdapter.updateList(g.iFamily)
+                                            g.showPopUp(this@MainActivity,"Home","Se guardo correctamente!")
+                                            //Toast.makeText(this@MainActivity,"Se guardo correctamente!",Toast.LENGTH_SHORT).show();
+                                            //startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                        }else{
+                                            g.showPopUp(this@MainActivity,"Home","Por favor intentelo de nuevo!")
+                                            //Toast.makeText(this@MainActivity,"Por favor intentelo de nuevo!",Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        //                                                                                                                                                                                                                                                                         Toast.makeText(this@LoginActivity,"Menu imgExit: " + post,Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // Handle error
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<HomePostResponse>, t: Throwable) {
+                                    // Handle failure
+                                    loadingDialog!!.dismissDialog()
+                                    g.showPopUp(this@MainActivity,"Home","Por favor intentelo de nuevo!")
+                                    //Toast.makeText(this@MainActivity,"Verifique Usuario o Clave",Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(this@LoginActivity,"Error onFailure",Toast.LENGTH_SHORT).show();
+                                }
+
+                            })
+
+
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FilePostResponse>, t: Throwable) {
+                        loadingDialog!!.dismissDialog()
+                        g.showPopUp(this@MainActivity,"Home - File","Se produjo un error!")
+                        //Toast.makeText(this@MainActivity,"Se produjo un error!!",Toast.LENGTH_SHORT).show()
+                    }
+
+
+
+                })
+
+
+
+            }
+        }catch (ex: Exception)
+        {}
+        popup.dismiss()
+    }
     val takePhotoAdd = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        //val bitmap = it.data?.extras?.get("data") as Bitmap
             result : ActivityResult ->
+        //val bitmap = result.data?.extras?.get("data") as Bitmap
         //Toast.makeText(this, "RESULT ${result.resultCode}", Toast.LENGTH_SHORT).show()
 
         //_file64string = Base64.encodeToString(file.readBytes(), Base64.NO_WRAP)
         //_file64string = Base64.encodeToString(file.readBytes(), Base64.DEFAULT)
-
+        var f = _fileName
         var angle = 0
         try{
             if(result.resultCode == Activity.RESULT_OK){
 
-                val exif = ExifInterface(file.path)
-                val orientation: Int = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL
-                )
+                try {
+                    if (::file.isInitialized) {
+                        val ff=file
+                        val exif = ExifInterface(file)
+                        val orientation: Int = exif.getAttributeInt(
+                            ExifInterface.TAG_ORIENTATION,
+                            ExifInterface.ORIENTATION_NORMAL
+                        )
+                        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                            angle = 90
+                        } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                            angle = 180
+                        } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                            angle = 270
+                        }
+                    }
 
-
-
-                if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                    angle = 90
-                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                    angle = 180
-                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                    angle = 270
+                }catch (ex: IOException){
+                    Toast.makeText(this, "Exception ${ex.message}", Toast.LENGTH_SHORT).show()
+                }catch (ex: Exception){
+                    Toast.makeText(this, "Exception ${ex.message}", Toast.LENGTH_SHORT).show()
                 }
+
+
+
+
+
 
 
                 val imageBitmap : Bitmap

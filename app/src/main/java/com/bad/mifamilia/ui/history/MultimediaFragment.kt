@@ -68,6 +68,7 @@ class MultimediaFragment : Fragment() {
             .with(this)
             .load(g.oGallery!!.photo)
             .centerCrop()
+            .skipMemoryCache(true)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(binding.ivGaleryPhoto)

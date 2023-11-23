@@ -56,6 +56,7 @@ class MultimediaViewHolder(view : View) : RecyclerView.ViewHolder(view){
             .with(context)
             .load(ev.link)
             .centerCrop()
+            .skipMemoryCache(true)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(ivFoto)

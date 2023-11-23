@@ -1,5 +1,6 @@
 package com.bad.mifamilia.ui.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -95,6 +96,10 @@ class LoginActivity : AppCompatActivity() {
                                 //u.Pass=txtPass.getText().toString().trim();
 
                                 g.oUsu = post!!.data
+                                binding.etUser.text?.clear()
+                                binding.etPass.text?.clear()
+                                //binding.tvLoginTitle.requestFocus()
+                                binding.etPass.clearFocus()
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             }else{
                                 g.showPopUp(this@LoginActivity,"Login","Verifique Usuario o Clave")
