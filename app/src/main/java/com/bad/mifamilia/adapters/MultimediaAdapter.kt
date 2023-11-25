@@ -56,13 +56,17 @@ class MultimediaViewHolder(view : View) : RecyclerView.ViewHolder(view){
             .with(context)
             .load(ev.link)
             .centerCrop()
-            .skipMemoryCache(true)
+            .skipMemoryCache(false)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(ivFoto)
 
         ivFoto.setOnClickListener {
             onItemSelected(ev)
+        }
+        ivFoto.setOnLongClickListener {
+            onItemRemove(ev)
+            true
         }
 
     }

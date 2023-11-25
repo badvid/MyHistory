@@ -1,8 +1,16 @@
 package com.bad.mifamilia.ui.history
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import android.view.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bad.mifamilia.R
 import com.bad.mifamilia.adapters.EtapaAdapter
 import com.bad.mifamilia.data.StagesPovider
 import com.bad.mifamilia.databinding.FragmentHistoryBinding
@@ -23,6 +32,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var g: GlobalClass
     private val retrofit = RetrofitHelper.getInstance()
+    private lateinit var popup : Dialog
     //private historyViewModel : HistoryViewModel by viewModels()
     //private lateinit var etapaAdapter : EtapaAdapter
     //private  var lista = mutableListOf<Etapa>()
@@ -147,7 +157,29 @@ class HistoryFragment : Fragment() {
     }
 
     private fun onItemDelete(et: Etapa) {
-        Toast.makeText(activity, "fragment onItemDelete", Toast.LENGTH_SHORT).show()
+        try {
+            popup = Dialog(activity!!)
+            popup.setContentView(R.layout.pop_generico_delete)
+            val btnCerrar = popup.findViewById<Button>(R.id.btn_pop_delete_cancelar)
+            val btnAceptar = popup.findViewById<Button>(R.id.btn_pop_delete_aceptar)
+
+            popup.findViewById<TextView>(R.id.txt_pop_delete_title).text = Html.fromHtml("Eliminar: <b>${et.etapa}</b>")
+            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("Tenga en cuenta que si la <b>ETAPA</b> contiene <b>Galerías</b> y <b>Fotos</b> las mismas también serán eliminadas.<br /><br />¿Esta seguro de que deseas eliminar la etapa?")
+
+            popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            popup.show()
+
+            btnAceptar.setOnClickListener {
+                Toast.makeText(activity,"Registro Eliminado",Toast.LENGTH_SHORT).show()
+                popup.dismiss()
+            }
+            btnCerrar.setOnClickListener {
+                popup.dismiss()
+            }
+        }catch (ex:Exception){
+            //Toast.makeText(activity,ex.message.toString(),Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun onItemSelected(et: Etapa) {

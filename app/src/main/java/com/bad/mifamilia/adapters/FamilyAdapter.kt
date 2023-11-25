@@ -83,6 +83,10 @@ class FamilyViewHolder(view : View) : RecyclerView.ViewHolder(view){
         tvEvent.setOnClickListener {
             onItemSelected(ev)
         }*/
+        ivFoto.setOnLongClickListener {
+            onItemRemove(ev)
+            true
+        }
     }
 
     fun ucFirst(str : String) : String{

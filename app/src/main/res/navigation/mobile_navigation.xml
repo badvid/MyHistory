@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/multimediaFragment"
         android:name="com.bad.mifamilia.ui.history.MultimediaFragment"
-        android:label="Galeria"
+        android:label="Multimedias"
         tools:layout="@layout/fragment_multimedia" >
         <action
             android:id="@+id/action_multimediaFragment_to_galleryFragment"

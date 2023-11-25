@@ -63,6 +63,10 @@ class GaleriaViewHolder(view : View) : RecyclerView.ViewHolder(view){
         ivFoto.setOnClickListener {
             onItemSelected(ev)
         }
+        ivFoto.setOnLongClickListener {
+            onItemRemove(ev)
+            true
+        }
 
     }
 

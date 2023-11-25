@@ -1,12 +1,19 @@
 package com.bad.mifamilia.ui.family
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +30,7 @@ class FamilyFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var g: GlobalClass
 
+    private lateinit var popup : Dialog
     //private  var lista : List<Family>  = listOf()
     private lateinit var familyAdapter : FamilyAdapter
     private  var lista = mutableListOf<Family>()
@@ -53,7 +61,28 @@ class FamilyFragment : Fragment() {
     }
 
     private fun onItemDelete(f: Family) {
+        try {
+            popup = Dialog(activity!!)
+            popup.setContentView(R.layout.pop_generico_delete)
+            val btnCerrar = popup.findViewById<Button>(R.id.btn_pop_delete_cancelar)
+            val btnAceptar = popup.findViewById<Button>(R.id.btn_pop_delete_aceptar)
 
+            popup.findViewById<TextView>(R.id.txt_pop_delete_title).text = Html.fromHtml("Eliminar: ${f.firstName} ${f.lastName}")
+            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("¿Esta seguro de que deseas eliminar al familiar?")
+
+            popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            popup.show()
+
+            btnAceptar.setOnClickListener {
+                Toast.makeText(activity,"Registro Eliminado", Toast.LENGTH_SHORT).show()
+                popup.dismiss()
+            }
+            btnCerrar.setOnClickListener {
+                popup.dismiss()
+            }
+        }catch (ex:Exception){
+            //Toast.makeText(activity,ex.message.toString(),Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onItemSelected(f: Family) {

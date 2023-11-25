@@ -1,11 +1,17 @@
 package com.bad.mifamilia.ui.history
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Html
 import android.util.Base64
 import android.view.*
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,6 +32,7 @@ class MultimediaFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var g: GlobalClass
 
+    private lateinit var popup : Dialog
     private lateinit var galeryAdapter: MultimediaAdapter
     lateinit var lista  : List<Multimedia>
 
@@ -68,7 +75,7 @@ class MultimediaFragment : Fragment() {
             .with(this)
             .load(g.oGallery!!.photo)
             .centerCrop()
-            .skipMemoryCache(true)
+            .skipMemoryCache(false)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .into(binding.ivGaleryPhoto)
@@ -97,7 +104,28 @@ class MultimediaFragment : Fragment() {
     }
 
     private fun onItemDelete(et: Multimedia) {
+        try {
+            popup = Dialog(activity!!)
+            popup.setContentView(R.layout.pop_generico_delete)
+            val btnCerrar = popup.findViewById<Button>(R.id.btn_pop_delete_cancelar)
+            val btnAceptar = popup.findViewById<Button>(R.id.btn_pop_delete_aceptar)
 
+            popup.findViewById<TextView>(R.id.txt_pop_delete_title).text = Html.fromHtml("Eliminar Foto")
+            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("¿Esta seguro de que deseas eliminar el registroo?")
+
+            popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            popup.show()
+
+            btnAceptar.setOnClickListener {
+                Toast.makeText(activity,"Registro Eliminado",Toast.LENGTH_SHORT).show()
+                popup.dismiss()
+            }
+            btnCerrar.setOnClickListener {
+                popup.dismiss()
+            }
+        }catch (ex:Exception){
+            //Toast.makeText(activity,ex.message.toString(),Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onItemSelected(et: Multimedia) {

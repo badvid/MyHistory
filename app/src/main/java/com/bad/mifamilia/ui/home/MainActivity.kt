@@ -421,8 +421,8 @@ class MainActivity : AppCompatActivity()  {
             popup.setContentView(R.layout.popup_add_family)
 
             val _parent =  popup.findViewById<AutoCompleteTextView>(R.id.sp_parent)
-            val _apellido =  popup.findViewById<EditText>(R.id.et_g_galeria)
-            val _nombres =  popup.findViewById<EditText>(R.id.et_g_etapa)
+            val _apellido =  popup.findViewById<EditText>(R.id.et_g_apellido)
+            val _nombres =  popup.findViewById<EditText>(R.id.et_g_nombres)
             val _doc =  popup.findViewById<EditText>(R.id.et_nro_doc)
             val _correo =  popup.findViewById<EditText>(R.id.et_correo)
 
@@ -1106,7 +1106,7 @@ class MainActivity : AppCompatActivity()  {
 
     }
     private fun showResultPopUp(bm : Bitmap){
-
+        //g.iStages = emptyList()
         popup.setContentView(R.layout.popup_add_photo)
         val btnCerrar = popup.findViewById<ImageView>(R.id.img_close)
         val btnPhoto = popup.findViewById<ConstraintLayout>(R.id.img_foto_bg)
@@ -1128,6 +1128,12 @@ class MainActivity : AppCompatActivity()  {
 
         popup.findViewById<TextInputLayout>(R.id.ly_g_etapa_cbo).visibility = View.VISIBLE
         popup.findViewById<TextInputLayout>(R.id.ly_g_galeria_cbo).visibility = View.VISIBLE
+
+       /* popup.findViewById<TextInputLayout>(R.id.ly_g_etapa_cbo).visibility = View.GONE
+        popup.findViewById<TextInputLayout>(R.id.ly_g_galeria_cbo).visibility = View.GONE
+
+        popup.findViewById<TextInputLayout>(R.id.ly_g_etapa).visibility = View.VISIBLE
+        popup.findViewById<TextInputLayout>(R.id.ly_g_galeria).visibility = View.VISIBLE*/
         //cboGaleria.visibility = View.VISIBLE
         //cboGaleria.visibility = View.VISIBLE
         //val spTipoMov = v.findViewById<View>(R.id.spTipoMov) as Spinner

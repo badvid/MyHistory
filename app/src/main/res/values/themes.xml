@@ -31,6 +31,20 @@
         <item name="android:colorButtonNormal">@color/pink</item>
     </style>
 
+    <style name="btnDelete" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/red</item>
+        <item name="background">@drawable/btn_delete</item>
+        <item name="android:textColorHighlight">@color/gray_300</item>
+        <item name="android:colorButtonNormal">@color/pink</item>
+    </style>
+
+    <style name="btnCancel" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/gray_300</item>
+        <item name="background">@drawable/btn_cancel</item>
+        <item name="android:textColorHighlight">@color/gray_300</item>
+        <item name="android:colorButtonNormal">@color/pink</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.CornersSize" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>

@@ -1,12 +1,18 @@
 package com.bad.mifamilia.ui.history
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Html
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +30,7 @@ class GalleryFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var g: GlobalClass
 
+    private lateinit var popup : Dialog
 
     private lateinit var galeryAdapter: GaleryAdapter
 
@@ -82,7 +89,28 @@ class GalleryFragment : Fragment() {
         }
     }
     private fun onItemDelete(obj: Galeria) {
+        try {
+            popup = Dialog(activity!!)
+            popup.setContentView(R.layout.pop_generico_delete)
+            val btnCerrar = popup.findViewById<Button>(R.id.btn_pop_delete_cancelar)
+            val btnAceptar = popup.findViewById<Button>(R.id.btn_pop_delete_aceptar)
 
+            popup.findViewById<TextView>(R.id.txt_pop_delete_title).text = Html.fromHtml("Eliminar: <b>${obj.name}</b>")
+            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("Tenga en cuenta que si la <b>GALERIA</b> contiene <b>Fotos</b> las mismas también serán eliminadas.<br /><br />¿Esta seguro de que deseas eliminar la Galería?")
+
+            popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            popup.show()
+
+            btnAceptar.setOnClickListener {
+                Toast.makeText(activity,"Registro Eliminado",Toast.LENGTH_SHORT).show()
+                popup.dismiss()
+            }
+            btnCerrar.setOnClickListener {
+                popup.dismiss()
+            }
+        }catch (ex:Exception){
+            //Toast.makeText(activity,ex.message.toString(),Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onItemSelected(obj: Galeria) {

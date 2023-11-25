@@ -33,5 +33,6 @@
     <color name="gray_400">#6B6B6B</color>
     <color name="gray_500">#414141</color>
     <color name="pink">#FE347F</color>
+    <color name="red">#F60B0B</color>
     <color name="green_100">#4BE839</color>
 </resources>

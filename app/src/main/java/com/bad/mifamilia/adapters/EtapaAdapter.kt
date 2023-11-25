@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -137,8 +138,17 @@ cardView.setBackgroundResource(R.drawable.card_view_bg);
         lyEtapas.setOnClickListener {
             onItemSelected(ev)
          }
-     }
+        lyEtapas.setOnLongClickListener {
+            onItemRemove(ev)
+            //Toast.makeText(context,"Seleccion",Toast.LENGTH_SHORT).show()
+            /*onItemLongClickListener?.let {
+                onItemRemove(ev)
 
+            }*/
+            true
+        }
+     }
+private var onItemLongClickListener : ((Etapa)->Unit)?=null
     fun ucFirst(str : String) : String{
         var r : String = ""
         if(str.isEmpty()){
