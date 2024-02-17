@@ -26,6 +26,12 @@ interface APIService {
     @POST("User")
     fun RegisterUser(@Body body: UserPost) : Call<UserPostResponse>
 
+    //Home
+    @GET("Home")
+    suspend fun getHomeInit(@Query("id_user") id_user : Int = 0 ) : Response<HomeGetResponse>
+    @POST("Home")
+    fun saveHomeFull(@Body body: HomeFull) : Call<HomePostResponse>
+
     //Parent
     @GET("Parent")
     suspend fun getParents() : Response<ParentGetResponse>
@@ -54,9 +60,7 @@ interface APIService {
     @POST("Family")
     fun saveFamily(@Body body: FamilyPost) : Call<FamilyPostResponse>
 
-    //Home
-    @POST("Home")
-    fun saveHomeFull(@Body body: HomeFull) : Call<HomePostResponse>
+
 
     //Files
     @Multipart

@@ -19,6 +19,7 @@ data class UserPostResponse (
     var data : UserPost
 )
 data class ParentGetResponse (var success : Boolean, var code : Int, var message : String, var source : String, var data : List<Parent>)
+data class HomeGetResponse (var success : Boolean, var code : Int, var message : String, var source : String, var data : List<HomeLast>)
 data class HomePostResponse (var success : Boolean, var code : Int, var message : String, var source : String, var data : HomeFull)
 data class FilePostResponse (var success : Boolean, var code : Int, var message : String, var source : String, var data : List<Archivo>)
 

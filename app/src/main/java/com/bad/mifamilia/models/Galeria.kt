@@ -12,5 +12,6 @@ class Galeria (
     val latitud: String,
     val longitud: String,
     val descrip: String,
-    val photo: String
+    val photo: String,
+    val iMultimedias: List<Multimedia>?
 )

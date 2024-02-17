@@ -6,6 +6,11 @@ import com.bad.mifamilia.models.*
 class Repository {
     private val api = repoServices()
 
+    suspend fun getHomeInit(id_user : Int): List<HomeLast>{
+        val response: List<HomeLast> = api.getHomeInit(id_user)
+        HomeLastProvider.iHomeLast = response
+        return response
+    }
     suspend fun getAllStages(id: Int, id_user : Int, page: Int, perPage : Int): List<Etapa>{
         val response: List<Etapa> = api.getStages(id,id_user,page,perPage)
         StagesPovider.iStages = response

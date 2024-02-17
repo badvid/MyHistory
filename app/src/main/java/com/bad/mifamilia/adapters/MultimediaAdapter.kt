@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bad.mifamilia.R
 import com.bad.mifamilia.helpers.*
 import com.bad.mifamilia.models.Multimedia
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 
 class MultimediaAdapter (var list : List<Multimedia>, val onItemSelected:(Multimedia)-> Unit, val onItemRemove:(Multimedia)-> Unit) : RecyclerView.Adapter<MultimediaViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultimediaViewHolder {
@@ -40,7 +38,7 @@ class MultimediaAdapter (var list : List<Multimedia>, val onItemSelected:(Multim
 
 class MultimediaViewHolder(view : View) : RecyclerView.ViewHolder(view){
     val context = view.context
-    val ivFoto = view.findViewById<ImageView>(R.id.img_item_multi)
+    val ivFoto = view.findViewById<ImageView>(R.id.img_home_item)
     //val tvTitle = view.findViewById<TextView>(R.id.tv_title)
 
     fun render(ev: Multimedia, onItemSelected: (Multimedia) -> Unit, onItemRemove: (Multimedia) -> Unit){

@@ -10,7 +10,12 @@ import retrofit2.Response
 class repoServices {
 
     private val retrofit = RetrofitHelper.getInstance()
-
+    suspend fun  getHomeInit(id_user : Int): List<HomeLast> {
+        return withContext(Dispatchers.IO){
+            val response : Response<HomeGetResponse> = retrofit.getHomeInit(id_user)
+            response.body()!!.data ?: emptyList()
+        }
+    }
     suspend fun  getStages(id: Int, id_user : Int, page: Int, perPage : Int): List<Etapa> {
         return withContext(Dispatchers.IO){
             val response : Response<StageGetResponse> = retrofit.getStages(id,id_user,page,perPage)
