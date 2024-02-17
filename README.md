@@ -19,4 +19,10 @@ MULTIMEDIA
 
 <img width="349" alt="image" src="https://github.com/badvid/MyHistory/assets/122509007/4524b6ef-91f1-4b7f-8ebf-53bb1ff7ffcf">
 
+
+HOME
+
+<img width="357" alt="image" src="https://github.com/badvid/MyHistory/assets/122509007/0f26215b-70a6-46ec-97e6-a901d0bbb220">
+
+
 Estoy teniendo probleas con sacar la foto en horizontal y que no explote la aplicacion por el viewmodel
