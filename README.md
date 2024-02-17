@@ -26,3 +26,11 @@ HOME
 
 
 Estoy teniendo probleas con sacar la foto en horizontal y que no explote la aplicacion por el viewmodel
+
+
+TODO
+ - Corregir prolema de fotos al sacar horizontal
+ - atualizar los nobres de las etapas
+ - actualizar los nombre de las galerias
+ - Podr eliminar las fotos cargadas
+ - actualizar listdos de las etapas, galerias y fotos asi reflejan los cambios
