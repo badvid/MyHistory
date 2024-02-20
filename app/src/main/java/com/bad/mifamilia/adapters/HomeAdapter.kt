@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bad.mifamilia.R
@@ -20,7 +22,7 @@ import java.util.*
 
 class HomeAdapter (var list : List<HomeLast>, val onItemSelected:(HomeLast)-> Unit, val onItemRemove:(HomeLast)-> Unit) : RecyclerView.Adapter<HomeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        return HomeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_multimedia,parent,false))
+        return HomeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_home,parent,false))
     }
     override fun getItemCount() = list.size
     /*override fun getItemCount(): Int {
@@ -48,6 +50,9 @@ class HomeViewHolder(view : View) : RecyclerView.ViewHolder(view){
     val ivFoto1 = view.findViewById<ImageView>(R.id.img_home_item1)
     val ivFoto2 = view.findViewById<ImageView>(R.id.img_home_item2)
     val ivFoto3 = view.findViewById<ImageView>(R.id.img_home_item3)
+    val cv_home1 = view.findViewById<CardView>(R.id.cv_home1)
+    val cv_home2 = view.findViewById<CardView>(R.id.cv_home2)
+    val cv_home3 = view.findViewById<CardView>(R.id.cv_home3)
 
 
     fun render(ev: HomeLast, onItemSelected: (HomeLast) -> Unit, onItemRemove: (HomeLast) -> Unit){
@@ -55,20 +60,32 @@ class HomeViewHolder(view : View) : RecyclerView.ViewHolder(view){
         tvTitle.text = "${ucFirst(ev.stage)} - ${ucFirst(ev.name)}"
 
         var i : Int = 1
+        var cv: CardView = cv_home1
         var iv: ImageView = ivFoto1
+       // iv.isVisible=false
+        //cv.visibility =View.GONE
 
         ev.iMultimedias?.forEach {
             when(i){
-                1 -> iv = ivFoto1
-                2 -> iv = ivFoto2
-                3 -> iv = ivFoto3
+                1 -> {iv = ivFoto1
+                    cv = cv_home1}
+                2 -> {iv = ivFoto2
+                    cv = cv_home2}
+                3 -> {iv = ivFoto3
+                    cv = cv_home3}
             }
             setearInfo(it, iv, onItemRemove(ev))
+            cv.visibility =View.VISIBLE
 
-            val _d : Date = SimpleDateFormat("yyyy-MM-dd HH:mm").parse(it.dateCreated)
-            tvSubTitle.text = "Último registro * ${SimpleDateFormat("dd/MM/yyy HH:mm").format(_d)}"
-            //tvFecha.text = SimpleDateFormat("dd ").format(_d) + ucFirst(SimpleDateFormat("MMMM").format(_d))
-            //tvTime.text = SimpleDateFormat("HH:mm").format(_d)
+            try {
+                val _d : Date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(it.dateCreated)
+                tvSubTitle.text = "Último registro * ${SimpleDateFormat("dd/MM/yyyy HH:mm").format(_d)}"
+                //tvFecha.text = SimpleDateFormat("dd ").format(_d) + ucFirst(SimpleDateFormat("MMMM").format(_d))
+                //tvTime.text = SimpleDateFormat("HH:mm").format(_d)
+            }catch (e: Exception){
+                tvSubTitle.text = "Último registro"
+            }
+
             i += 1
         }
         /*
@@ -93,6 +110,8 @@ class HomeViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
     fun setearInfo(ev: Multimedia, img: ImageView, onItemSelected: Unit)
     {
+        //img.isVisible=true
+        //img.visibility =View.VISIBLE
         Glide
             .with(context)
             .load(ev.link)
@@ -112,7 +131,7 @@ class HomeViewHolder(view : View) : RecyclerView.ViewHolder(view){
         if(str.isEmpty()){
             r = ""
         }else{
-            r = str.substring(0,1).toUpperCase() + str.substring(1,3)
+            r = str.substring(0,1).toUpperCase() + str.substring(1,str.length)
         }
         return r
     }

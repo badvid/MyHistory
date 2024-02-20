@@ -111,7 +111,7 @@ class MultimediaFragment : Fragment() {
             val btnAceptar = popup.findViewById<Button>(R.id.btn_pop_delete_aceptar)
 
             popup.findViewById<TextView>(R.id.txt_pop_delete_title).text = Html.fromHtml("Eliminar Foto")
-            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("¿Esta seguro de que deseas eliminar el registroo?")
+            popup.findViewById<TextView>(R.id.txt_pop_delete_mensaje).text = Html.fromHtml("¿Esta seguro de que deseas eliminar el registro?")
 
             popup.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             popup.show()

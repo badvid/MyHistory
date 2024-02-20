@@ -10,10 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.bad.mifamilia.R
-import com.bad.mifamilia.adapters.EtapaAdapter
-import com.bad.mifamilia.adapters.FamilyAdapter
-import com.bad.mifamilia.adapters.GaleryAdapter
-import com.bad.mifamilia.adapters.MultimediaAdapter
+import com.bad.mifamilia.adapters.*
 import com.bad.mifamilia.models.*
 import java.util.*
 
@@ -22,6 +19,7 @@ public final class GlobalClass : Application {
     private var Url: String? = null
     private val apiKey = "U0lTTE9HQlM7UzEzTDA1OVIwRA=="
     public var oUsu: User? = null
+    public var iHomes: List<HomeLast> = listOf<HomeLast>()
     public var iStages: List<Etapa> = listOf<Etapa>()
     public var iGalleries: List<Galeria> = listOf<Galeria>()
     public var iMultimedias: List<Multimedia> = listOf<Multimedia>()
@@ -32,7 +30,7 @@ public final class GlobalClass : Application {
     public var iFamily: List<Family> = listOf<Family>()
     public var iParents: List<Parent> = listOf<Parent>()
 
-
+    public lateinit var homeAdapter: HomeAdapter
     public lateinit var etapaAdapter : EtapaAdapter
     public lateinit var galeryAdapter : GaleryAdapter
     public lateinit var multimediaAdapter : MultimediaAdapter

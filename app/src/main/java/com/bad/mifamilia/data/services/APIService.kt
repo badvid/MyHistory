@@ -27,8 +27,8 @@ interface APIService {
     fun RegisterUser(@Body body: UserPost) : Call<UserPostResponse>
 
     //Home
-    @GET("Home")
-    suspend fun getHomeInit(@Query("id_user") id_user : Int = 0 ) : Response<HomeGetResponse>
+    @GET("Home/{id_user}")
+    suspend fun getHomeInit(@Path("id_user") id_user : Int = 0 ) : Response<HomeGetResponse>
     @POST("Home")
     fun saveHomeFull(@Body body: HomeFull) : Call<HomePostResponse>
 

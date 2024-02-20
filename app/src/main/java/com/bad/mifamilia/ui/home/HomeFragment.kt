@@ -13,8 +13,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bad.mifamilia.R
 import com.bad.mifamilia.adapters.EtapaAdapter
+import com.bad.mifamilia.adapters.HomeAdapter
 import com.bad.mifamilia.databinding.FragmentHomeBinding
 import com.bad.mifamilia.helpers.GlobalClass
+import com.bad.mifamilia.models.HomeLast
 import com.bad.mifamilia.ui.history.HistoryViewModel
 
 class HomeFragment : Fragment() {
@@ -49,13 +51,21 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //binding.bgHome.background.alpha= 0.7.toInt()
 
-        val textView: TextView = binding.textHome
+        //binding.bgHome.background.alpha= 0.7.toInt()
+        /*val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
+        }*/
         return root
+    }
+
+    private fun onItemSelected(et: HomeLast) {
+
+    }
+
+    private fun onItemDelete(et: HomeLast) {
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,16 +75,18 @@ class HomeFragment : Fragment() {
         g = activity!!.applicationContext as GlobalClass
         // TODO: Use the ViewModel
 
+        binding.txtBienvenido.text = "Bienvenid@ ${g.oUsu!!.firstName} ${g.oUsu!!.lastName}"
+
         viewModel.homeInit(g.oUsu!!.id).observe(viewLifecycleOwner, Observer {
-           /* g.iStages = it
-            g.etapaAdapter = EtapaAdapter(it,
+           g.iHomes = it
+            g.homeAdapter = HomeAdapter(it,
                 onItemSelected = {et -> onItemSelected(et)},
                 onItemRemove = {et -> onItemDelete(et)}
             )
-            binding.rvEtapas.apply {
+            binding.rvItemMultimedia.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = g.etapaAdapter
-            }*/
+                adapter = g.homeAdapter
+            }
         })
         viewModel.isLoading.observe(this, Observer {
             binding.progress.isVisible = it
