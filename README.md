@@ -34,3 +34,12 @@ TODO
  - actualizar los nombre de las galerias
  - Podr eliminar las fotos cargadas
  - actualizar listdos de las etapas, galerias y fotos asi reflejan los cambios
+
+ENDPOINT
+http://davidbad-001-site4.atempurl.com/swagger/index.html
+
+Sign:
+{
+"user": "prueba@gmail.com",
+"pass": 111
+}
